@@ -1,0 +1,14 @@
+parameters:
+    level: 9
+    paths:
+        - app
+        - modules
+    excludePaths:
+        - ./.git
+        - ./vendor/*
+        - ./node_modules/*
+    ignoreErrors:
+    dynamicConstantNames:
+        - PHP_CODESNIFFER_IN_TESTS
+        - PHP_CODESNIFFER_CBF
+        - PHP_CODESNIFFER_VERBOSITY
