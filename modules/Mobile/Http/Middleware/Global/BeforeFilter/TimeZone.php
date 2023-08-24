@@ -4,6 +4,7 @@ namespace Modules\Mobile\Http\Middleware\Global\BeforeFilter;
 
 use Closure;
 use Illuminate\Http\Request;
+use Modules\Mobile\Enums\TimeName;
 
 class TimeZone
 {
@@ -16,7 +17,7 @@ class TimeZone
      */
     public function handle(Request $request, Closure $next): mixed
     {
-        date_default_timezone_set('Asia/Ho_Chi_Minh');
+        date_default_timezone_set(TimeName::getTimezone('vn'));
 
         return $next($request);
     }
