@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Modules\Sanctum\Models;
 
 use Carbon\Carbon;
+use Carbon\CarbonInterface;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Modules\Sanctum\Enums\TokenType;
 use Illuminate\Database\Eloquent\Builder;
@@ -12,6 +14,17 @@ use Laravel\Sanctum\PersonalAccessToken as BaseAccessToken;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 
+/**
+ * @method static \Illuminate\Database\Query\Builder where($column, $operator = null, $value = null, $boolean = 'and')
+ * @method static \Illuminate\Database\Query\Builder create(array $attributes = [])
+ * @method static Builder findOrFail($id, $columns = ['*'])
+ * @method Model update(array $attributes = [])
+ *
+ * @property int $id
+ * @property string $token
+ * @property int|null $access_id
+ * @property CarbonInterface|Carbon|string $expires_at
+ */
 class PersonalAccessToken extends BaseAccessToken
 {
     /**
@@ -117,17 +130,17 @@ class PersonalAccessToken extends BaseAccessToken
             return true;
         }
 
-        return !$this->expires_at->isPast();
+        return !$this->expires_at->isPast();/** @phpstan-ignore-line */
     }
 
     /**
      * Save token as Refresh Token
      *
      * @param array<string> $abilities
-     * @return array<string>
+     * @return array<string, float|int|string>
      * @throws \Throwable
      */
-    public function updateAsRefreshToken(array $abilities ,): array
+    public function updateAsRefreshToken(array $abilities): array
     {
         return $this->updateToken($abilities, TokenType::Refresh);
     }
@@ -137,7 +150,7 @@ class PersonalAccessToken extends BaseAccessToken
      *
      * Save token as Access Token
      * @param array<string> $abilities
-     * @return array<string>
+     * @return array<string, float|int|string>
      * @throws \Throwable
      */
     public function updateAsAccessToken(array $abilities): array
@@ -150,7 +163,7 @@ class PersonalAccessToken extends BaseAccessToken
      *
      * @param array<string> $abilities
      * @param TokenType $type
-     * @return array<string>
+     * @return array<string, float|int|string>
      * @throws \Throwable
      */
     public function updateToken(array $abilities, TokenType $type): array
@@ -163,20 +176,20 @@ class PersonalAccessToken extends BaseAccessToken
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
             'token_type' => $type->value,
-            'access_id' => $type->value == TokenType::Access->value ? null : $this->access_id, // @phpstan-ignore-line
+            'access_id' => $type->value == TokenType::Access->value ? null : $this->access_id,
         ]);
         $token = $this->refresh();
         // update expires at refresh token
         if ($type->value == TokenType::Access->value) {
-            /** @phpstan-ignore-next-line */
+            /* @var PersonalAccessToken $refreshToken */
             $refreshToken = $this->where('access_id', $token->id)->first();
-            $refreshToken->update(['expires_at' => $this->getTokenExpired(TokenType::Refresh)]);
+            $refreshToken?->update(['expires_at' => $this->getTokenExpired(TokenType::Refresh)]);/** @phpstan-ignore-line */
         }
 
         return [
-            'accessToken' => $token->token, // @phpstan-ignore-line
+            'accessToken' => $token->token,
             'plainTextToken' => $token->getKey().'|'.$plainTextToken,
-            'expiresAt' => Carbon::parse($token->expires_at)->timestamp, // @phpstan-ignore-line
+            'expiresAt' => Carbon::parse($token->expires_at)->timestamp,
         ];
     }
 
@@ -185,7 +198,7 @@ class PersonalAccessToken extends BaseAccessToken
      * updateFullToken
      *
      * @param array<string> $abilities
-     * @return array<string>
+     * @return array<string, float|int|string>
      * @throws \Throwable
      */
     public function updatePersonalToken(array $abilities = ['*']): array

@@ -2,6 +2,7 @@
 
 namespace Modules\Mobile\Services;
 
+use App\Models\User;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Support\Facades\Hash;
 use Modules\Mobile\Exceptions\BaseException;
@@ -49,7 +50,8 @@ class UserService implements UserServiceInterface
 
     /**
      * @param string $refreshToken
-     * @return array<string>
+     * @return array<string, float|int|string>
+     * @throws \Throwable
      */
     public function refreshToken(string $refreshToken): array
     {
@@ -68,6 +70,6 @@ class UserService implements UserServiceInterface
      */
     public function profile(): mixed
     {
-        return auth()->user(); // @phpstan-ignore-line
+        return $this->userRepository->getDetail(auth()->user()->id); // @phpstan-ignore-line
     }
 }

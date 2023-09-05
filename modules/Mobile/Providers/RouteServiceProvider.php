@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Mobile\Providers;
 
+use App\Enums\ModulesPrefix;
 use App\Traits\Provider\HasModuleProvider;
 use App\Traits\Provider\HasRouteProvider;
 use Illuminate\Cache\RateLimiting\Limit;
@@ -26,11 +27,9 @@ class RouteServiceProvider extends ServiceProvider
         $this->setRootDir(__DIR__);
 
         $this->routes(function () {
-            /** @phpstan-ignore-next-line */
-            $routeName = strtolower($this->getModuleName());
             $this->registerModuleRouteFromPaths(
                 ['api'],
-                $this->getRoutePrefix($routeName),
+                $this->getRoutePrefix(ModulesPrefix::Mobile->value),
                 $this->getRouteFilePath('api.php')
             );
         });

@@ -10,8 +10,20 @@ use Illuminate\Http\Request;
 
 class LoginController extends AdministratorController
 {
+
+    /**
+     * @return mixed
+     */
+    public function login(): mixed
+    {
+        return view('administrator::authentication.login');
+    }
+
     /**
      * Handle an authentication attempt.
+     *
+     * @param AuthenticateRequest $request
+     * @return RedirectResponse
      */
     public function authenticate(AuthenticateRequest $request): RedirectResponse
     {
@@ -25,20 +37,22 @@ class LoginController extends AdministratorController
         }
 
         return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
+            'warning' => __('administrator::auth.failed'),
         ])->onlyInput('email');
     }
 
     /**
      * Log the user out of the application.
+     *
+     * @param Request $request
+     * @return mixed
      */
-    public function logout(Request $request): RedirectResponse
+    public function logout(Request $request): mixed
     {
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        //@phpstan-ignore-next-line
-        return redirect()->route($request->route()->getPrefix().'.login');
+        return view('administrator::authentication.logout');
     }
 }

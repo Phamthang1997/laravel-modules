@@ -34,12 +34,4 @@ class UserController extends AdministratorController
 
         return view('administrator::page.home', compact('user'));
     }
-
-    /**
-     * @return mixed
-     */
-    public function login(): mixed
-    {
-        return view('administrator::authentication.login');
-    }
 }

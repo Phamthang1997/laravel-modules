@@ -2,8 +2,9 @@
 
 namespace Modules\Mobile\Http\Requests;
 
-use Illuminate\Contracts\Validation\ValidationRule;
-
+/**
+ * @property string $refresh_token
+ */
 class RefreshTokenRequest extends BaseRequest
 {
     /**

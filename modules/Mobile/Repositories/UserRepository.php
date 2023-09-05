@@ -7,9 +7,12 @@ use App\Repositories\BaseRepository;
 use Modules\Sanctum\Models\PersonalAccessToken;
 use Modules\Mobile\Repositories\Contracts\UserRepositoryInterface;
 
+/**
+ * @property User $model
+ */
 class UserRepository extends BaseRepository implements UserRepositoryInterface
 {
-    public function model()
+    public function model(): string
     {
         return User::class;
     }
@@ -20,7 +23,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
      */
     public function getDetail(int $id): mixed
     {
-        return $this->model()::whereId($id)->first();
+        return $this->model->where('id', $id)->first();
     }
 
     /**
@@ -29,12 +32,12 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
      */
     public function getToken(string $refreshToken): mixed
     {
-        $refreshToken = PersonalAccessToken::findToken($refreshToken);
+        $modelToken = PersonalAccessToken::findToken($refreshToken);
         // check exits Refresh Token and valid
-        if (!$refreshToken || !$refreshToken->isValid()) {
+        if (!$modelToken || !$modelToken->isValid()) {
             return false;
         }
 
-        return PersonalAccessToken::findOrFail($refreshToken->access_id); // @phpstan-ignore-line
+        return PersonalAccessToken::findOrFail($modelToken->access_id);
     }
 }

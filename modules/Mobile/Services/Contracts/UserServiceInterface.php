@@ -15,6 +15,13 @@ interface UserServiceInterface
     public function login(string $email, string $password): mixed;
 
     /**
+     * @param string $refreshToken
+     * @return array<string, float|int|string>
+     * @throws \Throwable
+     */
+    public function refreshToken(string $refreshToken): array;
+
+    /**
      * @return mixed
      */
     public function profile(): mixed;

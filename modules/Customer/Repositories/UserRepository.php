@@ -6,6 +6,9 @@ use App\Repositories\BaseRepository;
 use Modules\Customer\Models\User;
 use Modules\Customer\Repositories\Contracts\UserRepositoryInterface;
 
+/**
+ * @property User $model
+ */
 class UserRepository extends BaseRepository implements UserRepositoryInterface
 {
     public function model()
@@ -19,6 +22,6 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
      */
     public function getDetail(int $id): mixed
     {
-        return $this->model()::whereId($id)->first();
+        return $this->model->where('id', $id)->first();
     }
 }

@@ -20,5 +20,4 @@ return [
     'token_expired' => 'The access token has expired',
     'refresh_expired' => 'The refresh token has expired',
     'sign_out_success' => 'User logout successfully.',
-
 ];

@@ -7,6 +7,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
+use Modules\Mobile\Exceptions\BaseException;
 use Modules\Mobile\Http\Controllers\MobileController;
 use Modules\Mobile\Http\Requests\AuthenticateRequest;
 use Modules\Mobile\Http\Requests\RefreshTokenRequest;
@@ -35,29 +36,24 @@ class LoginController extends MobileController
 
     /**
      * Handle an authentication attempt.
+     * @throws BaseException
      */
     public function authenticate(AuthenticateRequest $request): JsonResponse
     {
-        /** @phpstan-ignore-next-line */
         $result = $this->userService->login($request->email, $request->password);
 
         return $this->successResponse($result);
     }
 
     /**
-     * Handle an authentication attempt.
-     * @param RefreshTokenRequest $request
-     * @return JsonResponse
+     * Handle an refresh token authentication attempt.
      */
     public function refreshToken(RefreshTokenRequest $request): JsonResponse
     {
-        /** @phpstan-ignore-next-line */
         $result = $this->userService->refreshToken($request->refresh_token);
 
         return $this->successResponse($result);
     }
-
-
 
     /**
      * Log the user out of the application.

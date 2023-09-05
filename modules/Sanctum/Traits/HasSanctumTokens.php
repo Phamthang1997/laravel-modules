@@ -20,7 +20,7 @@ trait HasSanctumTokens
      *
      * @param string $token
      * @param array<string> $abilities
-     * @return array<string>
+     * @return array<string, float|int|string>
      * @throws BindingResolutionException
      */
     public function createRefreshToken(string $token, array $abilities = ['*']): array
@@ -33,7 +33,7 @@ trait HasSanctumTokens
      *
      * @param string $token
      * @param array<string> $abilities
-     * @return array<string>
+     * @return array<string, float|int|string>
      * @throws BindingResolutionException
      */
     public function createAccessToken(string $token, array $abilities = ['*']): array
@@ -46,7 +46,7 @@ trait HasSanctumTokens
      *
      * @param string $token
      * @param array<string> $abilities
-     * @return array<string>
+     * @return array<string, float|int|string>
      * @throws BindingResolutionException
      */
     public function createPersonalToken(string $token, array $abilities = ['*']): array
@@ -65,7 +65,7 @@ trait HasSanctumTokens
      * @param string $name
      * @param array<string> $abilities
      * @param TokenType $type
-     * @return array<string>
+     * @return array<string, float|int|string>
      * @throws BindingResolutionException
      */
     public function createToken(string $name, array $abilities = ['*'], TokenType $type = TokenType::Access): array
@@ -82,13 +82,12 @@ trait HasSanctumTokens
             'access_id' => !empty($this->access_id) ? $this->access_id : null,
         ]);
         $instance->refresh();
-        //@phpstan-ignore-next-line
         $this->access_id = $token->id;
 
         return [
-            'accessToken' => $token->token, /** @phpstan-ignore-line */
+            'accessToken' => $token->token,
             'plainTextToken' => $token->getKey().'|'.$plainTextToken,
-            'expiresAt' => Carbon::parse($token->expires_at)->timestamp, /** @phpstan-ignore-line */
+            'expiresAt' => Carbon::parse($token->expires_at)->timestamp,
         ];
     }
 

@@ -2,8 +2,10 @@
 
 namespace Modules\Mobile\Http\Requests;
 
-use Illuminate\Contracts\Validation\ValidationRule;
-
+/**
+ * @property string $email
+ * @property string $password
+ */
 class AuthenticateRequest extends BaseRequest
 {
     /**

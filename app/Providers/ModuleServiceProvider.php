@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
+use App\Traits\Handler\ModulesHandler;
 use App\Traits\Provider\HasModuleProvider;
 use App\Traits\Provider\ProviderCommonFunctions;
 use Carbon\Laravel\ServiceProvider;
+use Illuminate\Contracts\Debug\ExceptionHandler;
 use Modules\Administrator\Providers\AdministratorServiceProvider;
 use Modules\Customer\Providers\CustomerServiceProvider;
 use Modules\Mobile\Providers\MobileServiceProvider;
@@ -40,8 +42,12 @@ class ModuleServiceProvider extends ServiceProvider
     {
         //Register Providers Module
         $this->registerProviders();
-
         //Register Folder Module
         $this->bootModule();
+        // Bootstrap Mobile Handler
+        $this->app->singleton(
+            ExceptionHandler::class,
+            ModulesHandler::class
+        );
     }
 }

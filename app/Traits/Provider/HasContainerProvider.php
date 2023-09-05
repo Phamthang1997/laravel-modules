@@ -63,7 +63,6 @@ trait HasContainerProvider
     private function registerServices(string $modulePath): void
     {
         $this->classFolder = $modulePath . $this->getModuleServicesDirName();
-        $this->namespaceFrom($this->classFolder);
         $this->registerBinder();
     }
 
@@ -76,7 +75,6 @@ trait HasContainerProvider
     private function registerRepositories(string $modulePath): void
     {
         $this->classFolder = $modulePath . $this->getModuleRepositoriesDirName();
-        $this->namespaceFrom($this->classFolder);
         $this->registerBinder();
     }
 
@@ -100,20 +98,19 @@ trait HasContainerProvider
      */
     private function registerBinder(): void
     {
-        $this->getFolderFiles($this->classFolder)->each(
+        $folderFile = $this->getFolderFiles($this->classFolder);
+        $this->namespaceFrom($this->classFolder);
+        $folderFile->each(
             fn (array $files, string $actualFolder) => LazyCollection::make($files)->each(
                 function (SplFileInfo $file) use ($actualFolder) {
                     $relativePath = $file->getRelativePathname();
                     $filenameWithoutExtension = $file->getFilenameWithoutExtension();
                     $filenameWithRelativePath = $this->prepareFilename($relativePath);
-
                     $interface = $this->interfaceFrom($filenameWithoutExtension);
                     $concrete = $this->concreteFrom($actualFolder, $filenameWithRelativePath);
-
                     if (! interface_exists($interface) || ! class_exists($concrete)) {
                          return;
                     }
-
                      app()->{$this->bindingType}($interface, $concrete);
                 }
             )

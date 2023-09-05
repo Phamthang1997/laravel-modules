@@ -16,9 +16,12 @@ use Modules\Administrator\Http\Controllers\UserController;
 */
 
 Route::group(['middleware' => ['guest']], function () {
-    Route::get('/login', [UserController::class, 'login'])->name('login');
-    Route::get('/show', [UserController::class, 'show']);
+    Route::get('/', function () {
+        return view('administrator::authentication.login');
+    })->name('index');
+    Route::get('/login', [LoginController::class, 'login'])->name('login');
     Route::post('/login', [LoginController::class, 'authenticate'])->name('authenticate');
+    Route::get('/show', [UserController::class, 'show']);
 });
 
 Route::group(['middleware' => ['auth:administrator', 'auth.session']], function () {
