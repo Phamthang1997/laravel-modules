@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace Modules\Administrator\Providers;
 
+use App\Traits\Provider\Contracts\WithProviderCommonFunctions;
 use App\Traits\Provider\ProviderCommonFunctions;
 use Illuminate\Support\ServiceProvider;
 
-class AdministratorServiceProvider extends ServiceProvider
+class AdministratorServiceProvider extends ServiceProvider implements WithProviderCommonFunctions
 {
     use ProviderCommonFunctions;
 

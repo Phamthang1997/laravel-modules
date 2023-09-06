@@ -14,7 +14,7 @@ trait MobileResponse
      * @param mixed|null $data
      * @return JsonResponse
      */
-    public function successResponse(mixed $data = null):  JsonResponse
+    final public function successResponse(mixed $data = null):  JsonResponse
     {
         //@phpstan-ignore-next-line
         return response()->json(
@@ -33,7 +33,7 @@ trait MobileResponse
      * @param mixed|null $data
      * @return JsonResponse
      */
-    public function createdSuccessResponse(mixed $data = null):  JsonResponse
+    final public function createdSuccessResponse(mixed $data = null):  JsonResponse
     {
         if (is_null($data)) {
             $data = new \stdClass();
@@ -53,7 +53,7 @@ trait MobileResponse
      * @param mixed|null $data
      * @return JsonResponse
      */
-    public function updatedSuccessResponse(mixed $data = null):  JsonResponse
+    final public function updatedSuccessResponse(mixed $data = null):  JsonResponse
     {
         if (is_null($data)) {
             $data = new \stdClass();
@@ -72,7 +72,7 @@ trait MobileResponse
      *
      * @return JsonResponse
      */
-    public function deletedSuccessResponse():  JsonResponse
+    final public function deletedSuccessResponse():  JsonResponse
     {
         //@phpstan-ignore-next-line
         return response()->json([
@@ -88,7 +88,7 @@ trait MobileResponse
      * @param mixed|null $message
      * @return JsonResponse
      */
-    public function badRequestErrorResponse(string $code = null, mixed $message = null):  JsonResponse
+    final public function badRequestErrorResponse(string $code = null, mixed $message = null):  JsonResponse
     {
         //@phpstan-ignore-next-line
         return response()->json(
@@ -108,7 +108,7 @@ trait MobileResponse
      * @param mixed|null $message
      * @return JsonResponse
      */
-    public function notFoundErrorResponse(string $code = null, mixed $message = null):  JsonResponse
+    final public function notFoundErrorResponse(string $code = null, mixed $message = null):  JsonResponse
     {
         //@phpstan-ignore-next-line
         return response()->json([
@@ -125,7 +125,7 @@ trait MobileResponse
      * @param string|null $message
      * @return JsonResponse
      */
-    public function unAuthorizedErrorResponse(string $code = null, string $message = null):  JsonResponse
+    final public function unAuthorizedErrorResponse(string $code = null, string $message = null):  JsonResponse
     {
         //@phpstan-ignore-next-line
         return response()->json([
@@ -141,7 +141,7 @@ trait MobileResponse
      * @param mixed $message
      * @return JsonResponse
      */
-    public function validateRequestErrorResponse(mixed $message = null):  JsonResponse
+    final public function validateRequestErrorResponse(mixed $message = null):  JsonResponse
     {
         //@phpstan-ignore-next-line
         return response()->json([
@@ -158,7 +158,7 @@ trait MobileResponse
      * @param string|null $message
      * @return JsonResponse
      */
-    public function serverErrorResponse(string $code = null, string $message = null):  JsonResponse
+    final public function serverErrorResponse(string $code = null, string $message = null):  JsonResponse
     {
         //@phpstan-ignore-next-line
         return response()->json([
@@ -176,7 +176,7 @@ trait MobileResponse
      * @param int $status
      * @return JsonResponse
      */
-    public function customErrorResponse(string $code, mixed $message, int $status):  JsonResponse
+    final public function customErrorResponse(string $code, mixed $message, int $status):  JsonResponse
     {
         //@phpstan-ignore-next-line
         return response()->json([

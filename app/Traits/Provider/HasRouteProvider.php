@@ -52,7 +52,7 @@ trait HasRouteProvider
      * @param string $filePath
      * @return void
      */
-    public function registerRouteFromPath(array $middlewares, string $prefix, string $filePath): void
+    private function registerRouteFromPath(array $middlewares, string $prefix, string $filePath): void
     {
         if (File::exists($filePath)) {
             Route::middleware($middlewares)->prefix($prefix)->as($prefix.'.')
@@ -68,7 +68,7 @@ trait HasRouteProvider
      * @param mixed $filePaths
      * @return void
      */
-    public function registerRouteFromPaths(array $middlewares, string $prefix, mixed $filePaths): void
+    private function registerRouteFromPaths(array $middlewares, string $prefix, mixed $filePaths): void
     {
         if (empty($filePaths)) {
             return;
@@ -112,7 +112,7 @@ trait HasRouteProvider
      * @param string $basePath
      * @return void
      */
-    public function mappingMiddlewares(string $basePath): void
+    private function mappingMiddlewares(string $basePath): void
     {
         $this->getFolderFiles($basePath)->each(
             fn (array $files, string $actualFolder) => LazyCollection::make($files)->each(
@@ -178,7 +178,7 @@ trait HasRouteProvider
      *
      * @return string
      */
-    public function getBeforeMiddlewaresDirName(): string
+    private function getBeforeMiddlewaresDirName(): string
     {
         return 'BeforeFilter';
     }
@@ -188,7 +188,7 @@ trait HasRouteProvider
      *
      * @return string
      */
-    public function getAfterMiddlewaresDirName(): string
+    private function getAfterMiddlewaresDirName(): string
     {
         return 'AfterFilter';
     }
@@ -198,7 +198,7 @@ trait HasRouteProvider
      *
      * @return string
      */
-    public function getGlobalMiddlewaresDirName(): string
+    private function getGlobalMiddlewaresDirName(): string
     {
         return 'Global' . DIRECTORY_SEPARATOR;
     }
@@ -208,7 +208,7 @@ trait HasRouteProvider
      *
      * @return string
      */
-    public function getHttpMiddlewaresDirName(): string
+    private function getHttpMiddlewaresDirName(): string
     {
         return 'Http' . DIRECTORY_SEPARATOR . 'Middleware' . DIRECTORY_SEPARATOR;
     }

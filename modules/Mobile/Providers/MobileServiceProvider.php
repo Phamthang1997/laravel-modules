@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace Modules\Mobile\Providers;
 
+use App\Traits\Provider\Contracts\WithProviderCommonFunctions;
 use Illuminate\Support\ServiceProvider;
 use App\Traits\Provider\ProviderCommonFunctions;
 use Modules\Sanctum\Providers\SanctumServiceProvider;
 
-class MobileServiceProvider extends ServiceProvider
+class MobileServiceProvider extends ServiceProvider implements WithProviderCommonFunctions
 {
     use ProviderCommonFunctions;
 

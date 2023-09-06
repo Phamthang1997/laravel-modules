@@ -179,10 +179,7 @@ trait HasModuleProvider
         $allFile = File::files($directory);
         //@phpstan-ignore-next-line
         return array_filter(array_map(function ($item) use ($pathOnly) {
-            if (!($item instanceof SplFileInfo)) {
-                return null;
-            }
-            if ($item->getExtension() !== 'php') {
+            if (!($item instanceof SplFileInfo) || $item->getExtension() !== 'php') {
                 return null;
             }
             if ($pathOnly) {
@@ -234,7 +231,7 @@ trait HasModuleProvider
      *
      * @return string
      */
-    public function getModuleLangDirName(): string
+    private function getModuleLangDirName(): string
     {
         return 'Lang';
     }
@@ -244,7 +241,7 @@ trait HasModuleProvider
      *
      * @return string
      */
-    public function getModuleViewDirName(): string
+    private function getModuleViewDirName(): string
     {
         return 'Views';
     }
@@ -254,7 +251,7 @@ trait HasModuleProvider
      *
      * @return string
      */
-    public function getModuleRouteDirName(): string
+    private function getModuleRouteDirName(): string
     {
         return 'Routes';
     }
@@ -264,7 +261,7 @@ trait HasModuleProvider
      *
      * @return string
      */
-    public function getModuleConfigDirName(): string
+    private function getModuleConfigDirName(): string
     {
         return 'Configs';
     }
@@ -274,7 +271,7 @@ trait HasModuleProvider
      *
      * @return string
      */
-    public function getModuleMigrationsDirName(): string
+    private function getModuleMigrationsDirName(): string
     {
         return 'Database' . DIRECTORY_SEPARATOR .'Migrations';
     }

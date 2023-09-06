@@ -6,7 +6,7 @@ use Exception;
 use Illuminate\Http\JsonResponse;
 use App\Traits\JsonResponse\MobileResponse;
 
-class TokenExceptions extends Exception
+final class TokenExceptions extends Exception
 {
     use MobileResponse;
 

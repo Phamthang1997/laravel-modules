@@ -1,17 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Providers;
 
-use App\Traits\Handler\ModulesHandler;
+use App\Traits\Provider\Contracts\WithModuleProvider;
+use App\Traits\Provider\Contracts\WithProviderCommonFunctions;
 use App\Traits\Provider\HasModuleProvider;
 use App\Traits\Provider\ProviderCommonFunctions;
 use Carbon\Laravel\ServiceProvider;
-use Illuminate\Contracts\Debug\ExceptionHandler;
 use Modules\Administrator\Providers\AdministratorServiceProvider;
 use Modules\Customer\Providers\CustomerServiceProvider;
 use Modules\Mobile\Providers\MobileServiceProvider;
 
-class ModuleServiceProvider extends ServiceProvider
+class ModuleServiceProvider extends ServiceProvider implements WithModuleProvider, WithProviderCommonFunctions
 {
     use HasModuleProvider;
     use ProviderCommonFunctions;
@@ -44,10 +46,5 @@ class ModuleServiceProvider extends ServiceProvider
         $this->registerProviders();
         //Register Folder Module
         $this->bootModule();
-        // Bootstrap Mobile Handler
-        $this->app->singleton(
-            ExceptionHandler::class,
-            ModulesHandler::class
-        );
     }
 }

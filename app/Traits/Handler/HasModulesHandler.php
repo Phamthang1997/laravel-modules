@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Traits\Handler;
 
 use App\Enums\ModulesPrefix;
-use App\Exceptions\Handler;
+use ErrorException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -15,7 +15,7 @@ use Modules\Mobile\Exceptions\BaseException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
-class ModulesHandler extends Handler
+trait HasModulesHandler
 {
     /**
      * @param $request
@@ -28,8 +28,12 @@ class ModulesHandler extends Handler
         // web
         if ($request->is(ModulesPrefix::Administrator->value.'/*')) {
             return match (true) {
-                /* @phpstan-ignore-next-line */
-                $e instanceof NotFoundHttpException => response()->view(Str::lower(ModulesPrefix::Administrator->name).'::error.404'),
+                $e instanceof NotFoundHttpException =>
+                    response()->view(Str::lower(ModulesPrefix::Administrator->name).'::error.404'), // @phpstan-ignore-line
+                $e instanceof ErrorException =>
+                    response()->view(Str::lower(ModulesPrefix::Administrator->name).'::error.500'), // @phpstan-ignore-line
+                $e instanceof AuthenticationException =>
+                    response()->view(Str::lower(ModulesPrefix::Administrator->name).'::error.403'), // @phpstan-ignore-line
                 default => parent::render($request, $e),
             };
         }

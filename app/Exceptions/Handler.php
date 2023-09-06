@@ -2,11 +2,14 @@
 
 namespace App\Exceptions;
 
+use App\Traits\Handler\HasModulesHandler;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 
 class Handler extends ExceptionHandler
 {
+    use HasModulesHandler;
+
     /**
      * The list of the inputs that are never flashed to the session on validation exceptions.
      *
@@ -23,8 +26,6 @@ class Handler extends ExceptionHandler
      */
     public function register(): void
     {
-        $this->reportable(function (Throwable $e) {
-            //
-        });
+      //
     }
 }

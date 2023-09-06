@@ -269,7 +269,7 @@ trait HasContainerProvider
      *
      * @return string
      */
-    public function getModuleServicesDirName(): string
+    private function getModuleServicesDirName(): string
     {
         return 'Services';
     }
@@ -279,7 +279,7 @@ trait HasContainerProvider
      *
      * @return string
      */
-    public function getModuleRepositoriesDirName(): string
+    private function getModuleRepositoriesDirName(): string
     {
         return 'Repositories';
     }
