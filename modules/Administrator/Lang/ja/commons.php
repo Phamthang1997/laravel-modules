@@ -14,4 +14,6 @@ return [
     */
 
     'auth_title' => 'ログインに失敗しました',
+    'reset_password' => 'パスワードを再設定する',
+    'changed_password' => 'パスワードが変更されました',
 ];

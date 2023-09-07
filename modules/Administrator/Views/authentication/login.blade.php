@@ -52,7 +52,7 @@
                                 <label class="form-check-label mb-0" for="basic-checkbox">Remember me</label>
                             </div>
                         </div>
-                        <div class="col-auto"><a class="fs--1 fw-semi-bold" href="/">Forgot Password?</a></div>
+                        <div class="col-auto"><a class="fs--1 fw-semi-bold" href="{{ route('management.password.forgot') }}">Forgot Password?</a></div>
                     </div>
                     <button class="btn btn-primary w-100 mb-3">Sign In</button>
                 </form>

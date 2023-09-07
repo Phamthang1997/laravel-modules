@@ -130,7 +130,7 @@ return [
         ],
 
         'administrator' => [
-            'provider' => 'customer',
+            'provider' => 'administrator',
             'table' => 'password_reset_tokens',
             'expire' => 60,
             'throttle' => 60,
@@ -144,7 +144,7 @@ return [
         ],
 
         'mobile' => [
-            'provider' => 'customer',
+            'provider' => 'mobile',
             'table' => 'password_reset_tokens',
             'expire' => 60,
             'throttle' => 60,

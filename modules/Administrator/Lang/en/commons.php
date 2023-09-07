@@ -14,4 +14,6 @@ return [
     */
 
     'auth_title' => 'Login failed',
+    'reset_password' => 'Reset Password',
+    'changed_password' => 'Password is changed',
 ];

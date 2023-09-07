@@ -3,10 +3,10 @@
 namespace Modules\Administrator\Http\Controllers\Authentication;
 
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Modules\Administrator\Http\Controllers\AdministratorController;
-use Modules\Administrator\Http\Requests\AuthenticateRequest;
-use Illuminate\Http\Request;
+use Modules\Administrator\Http\Requests\Authentication\LoginRequest;
 
 class LoginController extends AdministratorController
 {
@@ -22,10 +22,10 @@ class LoginController extends AdministratorController
     /**
      * Handle an authentication attempt.
      *
-     * @param AuthenticateRequest $request
+     * @param LoginRequest $request
      * @return RedirectResponse
      */
-    public function authenticate(AuthenticateRequest $request): RedirectResponse
+    public function authenticate(LoginRequest $request): RedirectResponse
     {
         $credentials = (array) $request->validated();
 

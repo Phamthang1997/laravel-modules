@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Modules\Administrator\Http\Controllers\Authentication\LoginController;
+use Modules\Administrator\Http\Controllers\Authentication\Password\ForgotController;
 use Modules\Administrator\Http\Controllers\UserController;
 
 /*
@@ -22,6 +23,13 @@ Route::group(['middleware' => ['guest']], function () {
     Route::get('/login', [LoginController::class, 'login'])->name('login');
     Route::post('/login', [LoginController::class, 'authenticate'])->name('authenticate');
     Route::get('/show', [UserController::class, 'show']);
+    Route::group(['prefix' => 'password'], function () {
+        Route::get('forgot', [ForgotController::class, 'show'])->name('password.forgot');
+        Route::post('send', [ForgotController::class, 'send'])->name('password.send');
+        Route::get('token/{token}', [ForgotController::class, 'token'])->name('password.token');
+        Route::post('reset', [ForgotController::class, 'reset'])->name('password.reset');
+        Route::get('complete', [ForgotController::class, 'complete'])->name('password.complete');
+    });
 });
 
 Route::group(['middleware' => ['auth:administrator', 'auth.session']], function () {
