@@ -2,21 +2,30 @@
 
 namespace Modules\Administrator\Http\Controllers\Authentication\Password;
 
-use Illuminate\Auth\Events\PasswordReset;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Password;
-use Illuminate\Support\Str;
 use Modules\Administrator\Email\Password\Complete;
 use Modules\Administrator\Http\Controllers\AdministratorController;
 use Modules\Administrator\Http\Requests\Authentication\Password\ForgotRequest;
 use Modules\Administrator\Http\Requests\Authentication\Password\ResetRequest;
 use Modules\Administrator\Http\Requests\Authentication\Password\TokenRequest;
-use Modules\Administrator\Models\User;
+use Modules\Administrator\Services\Contracts\PasswordServiceInterface;
 
 class ForgotController extends AdministratorController
 {
 
+    private PasswordServiceInterface $passwordService;
+
+    /**
+     * Construct container
+     *
+     */
+    public function __construct(
+        PasswordServiceInterface $passwordService,
+    )
+    {
+        $this->passwordService = $passwordService;
+    }
     /**
      * @return mixed
      */
@@ -31,13 +40,11 @@ class ForgotController extends AdministratorController
      */
     public function send(ForgotRequest $request): mixed
     {
-        $status = Password::broker('administrator')->sendResetLink(
-            $request->only('email')
-        );
+        $status = $this->passwordService->send($request);
 
         return $status === Password::RESET_LINK_SENT
             ? back()->with(['status' => __($status)])
-            : back()->withErrors(['email' => __($status)]);
+            : back()->withErrors(['email' => __($status)]); /** @phpstan-ignore-line */
     }
 
     /**
@@ -55,25 +62,16 @@ class ForgotController extends AdministratorController
      */
     public function reset(ResetRequest $request): mixed
     {
-        $status = Password::broker('administrator')->reset(
-            $request->only('email', 'password', 'confirm_password', 'token'),
-            function (User $user, string $password) {
-                $user->forceFill(['password' => Hash::make($password)])->setRememberToken(Str::random(60));
-                $user->save();
-
-                event(new PasswordReset($user));
-            }
-        );
+        $status = $this->passwordService->reset($request);
 
         if ($status === Password::PASSWORD_RESET) {
             // Change password complete...
             Mail::to($request->email)->send(new Complete());
-            //@phpstan-ignore-next-line
-            return redirect()->route('management.password.complete');
+
+            return redirect()->route('management.password.complete'); /** @phpstan-ignore-line */
         }
 
-        //@phpstan-ignore-next-line
-        return back()->withErrors(['email' => [__($status)]]);
+        return back()->withErrors(['email' => [__($status)]]); /** @phpstan-ignore-line */
     }
 
     /**
