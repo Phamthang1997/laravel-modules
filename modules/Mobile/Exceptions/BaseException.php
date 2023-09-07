@@ -6,6 +6,7 @@ use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\JsonResponse;
 use App\Traits\JsonResponse\MobileResponse;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 
 class BaseException extends Exception
 {
@@ -30,7 +31,10 @@ class BaseException extends Exception
     public function render(): JsonResponse
     {
         return match (true) {
-            $this->exception instanceof AuthenticationException => $this->unAuthorizedErrorResponse($this->code, $this->message),
+            $this->exception instanceof AuthenticationException =>
+                $this->unAuthorizedErrorResponse($this->code, $this->message),
+            $this->exception instanceof MethodNotAllowedHttpException =>
+                $this->customErrorResponse($this->code, $this->message, $this->exception->getStatusCode()),
             default => $this->badRequestErrorResponse($this->code, $this->message),
         };
     }

@@ -13,7 +13,6 @@ use Modules\Administrator\Services\Contracts\PasswordServiceInterface;
 
 class ForgotController extends AdministratorController
 {
-
     private PasswordServiceInterface $passwordService;
 
     /**

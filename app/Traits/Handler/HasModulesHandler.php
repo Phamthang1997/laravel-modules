@@ -12,6 +12,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Str;
 use Modules\Mobile\Exceptions\BaseException;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
@@ -40,7 +41,8 @@ trait HasModulesHandler
         // api
         if ($request->wantsJson() || $request->is(ModulesPrefix::Mobile->value.'/*')) {
             return match (true) {
-                $e instanceof AuthenticationException => throw new BaseException($e),
+                $e instanceof AuthenticationException,
+                $e instanceof MethodNotAllowedHttpException => throw new BaseException($e),
                 default => parent::render($request, $e),
             };
         }

@@ -6,7 +6,7 @@ namespace Modules\Mobile\Http\Requests;
  * @property string $email
  * @property string $password
  */
-class AuthenticateRequest extends BaseRequest
+class LoginRequest extends BaseRequest
 {
     /**
      * Get the validation rules that apply to the request.
