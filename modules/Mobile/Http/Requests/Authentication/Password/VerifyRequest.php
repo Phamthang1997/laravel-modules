@@ -29,9 +29,9 @@ class VerifyRequest extends BaseRequest
     public function messages(): array
     {
         return [
-            'token.required' => __('administrator::validation.required'),
-            'token.numeric' => __('administrator::validation.numeric'),
-            'token.digits' => __('administrator::validation.digits'),
+            'token.required' => __('mobile::validation.required'),
+            'token.numeric' => __('mobile::validation.numeric'),
+            'token.digits' => __('mobile::validation.digits'),
         ];
     }
 }

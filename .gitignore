@@ -4,6 +4,7 @@
 /public/hot
 /public/storage
 /public/administration
+/public/customer
 /public/vendor
 /storage/*.key
 /vendor

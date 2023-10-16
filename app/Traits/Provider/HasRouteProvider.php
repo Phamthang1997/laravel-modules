@@ -24,6 +24,8 @@ trait HasRouteProvider
      */
     protected array $middlewareAuth = [];
 
+    private bool $isPrefix = false;
+
     /**
      * Get route prefix for current module
      *
@@ -54,8 +56,13 @@ trait HasRouteProvider
      */
     private function registerRouteFromPath(array $middlewares, string $prefix, string $filePath): void
     {
+        $routePrefix = $prefix;
+        if ($this->isPrefix) {
+            $routePrefix = '';
+        }
+
         if (File::exists($filePath)) {
-            Route::middleware($middlewares)->prefix($prefix)->as($prefix.'.')
+            Route::middleware($middlewares)->prefix($routePrefix)->as($prefix.'.')
                 ->group($filePath);
         }
     }
@@ -106,6 +113,19 @@ trait HasRouteProvider
         $this->registerRouteFromPaths($middlewares, $prefix, $filePaths);
 
         return true;
+    }
+
+    /**
+     * Set isPrefix
+     *
+     * @param bool $isPrefix
+     * @return bool
+     */
+    public function setIsPrefix(bool $isPrefix): bool
+    {
+        $this->isPrefix = $isPrefix;
+
+        return $this->isPrefix;
     }
 
     /**

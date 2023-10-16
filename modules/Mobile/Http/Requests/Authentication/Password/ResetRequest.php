@@ -33,18 +33,18 @@ class ResetRequest extends BaseRequest
     public function messages(): array
     {
         return [
-            'token.required' => __('administrator::validation.required'),
-            'token.numeric' => __('administrator::validation.numeric'),
-            'token.digits' => __('administrator::validation.digits'),
+            'token.required' => __('mobile::validation.required'),
+            'token.numeric' => __('mobile::validation.numeric'),
+            'token.digits' => __('mobile::validation.digits'),
 
-            'password.required' => __('administrator::validation.required'),
-            'password.string' => __('administrator::validation.string'),
-            'password.min' => __('administrator::validation.min.string'),
+            'password.required' => __('mobile::validation.required'),
+            'password.string' => __('mobile::validation.string'),
+            'password.min' => __('mobile::validation.min.string'),
 
-            'confirm_password.required' => __('administrator::validation.required'),
-            'confirm_password.string' => __('administrator::validation.string'),
-            'confirm_password.min' => __('administrator::validation.min.string'),
-            'confirm_password.same' => __('administrator::validation.same'),
+            'confirm_password.required' => __('mobile::validation.required'),
+            'confirm_password.string' => __('mobile::validation.string'),
+            'confirm_password.min' => __('mobile::validation.min.string'),
+            'confirm_password.same' => __('mobile::validation.same'),
         ];
     }
 }

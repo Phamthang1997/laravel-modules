@@ -72,6 +72,7 @@ return [
     'links' => [
         //public_path('storage') => storage_path('app/public'),
         public_path('administration') => realpath('modules/Administrator/Public'),
+        public_path('customer') => realpath('modules/Customer/Public'),
     ],
 
 ];

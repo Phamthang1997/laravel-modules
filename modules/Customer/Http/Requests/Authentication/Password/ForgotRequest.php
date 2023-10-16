@@ -1,8 +1,10 @@
 <?php
 
-namespace Modules\Customer\Http\Requests;
+namespace Modules\Customer\Http\Requests\Authentication\Password;
 
-class AuthenticateRequest extends BaseRequest
+use Modules\Customer\Http\Requests\BaseRequest;
+
+class ForgotRequest extends BaseRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -13,7 +15,6 @@ class AuthenticateRequest extends BaseRequest
     {
         return [
             'email' => ['required', 'email'],
-            'password' => ['required', 'string', 'min:8'],
         ];
     }
 
@@ -27,10 +28,6 @@ class AuthenticateRequest extends BaseRequest
         return [
             'email.required' => __('customer::validation.required'),
             'email.email' => __('customer::validation.email'),
-
-            'password.required' => __('customer::validation.required'),
-            'password.email' => __('customer::validation.email'),
-            'password.min' => __('customer::validation.min.string'),
         ];
     }
 }

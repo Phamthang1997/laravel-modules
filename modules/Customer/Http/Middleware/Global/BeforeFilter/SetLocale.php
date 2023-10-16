@@ -17,7 +17,7 @@ class SetLocale
     public function handle(Request $request, Closure $next): mixed
     {
         /** @phpstan-ignore-next-line */
-        app()->setLocale('ja');
+        app()->setLocale('en');
 
         return $next($request);
     }

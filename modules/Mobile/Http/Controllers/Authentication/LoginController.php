@@ -9,8 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Modules\Mobile\Exceptions\BaseException;
 use Modules\Mobile\Http\Controllers\MobileController;
+use Modules\Mobile\Http\Requests\Customer\RefreshTokenRequest;
 use Modules\Mobile\Http\Requests\LoginRequest;
-use Modules\Mobile\Http\Requests\RefreshTokenRequest;
 use Modules\Mobile\Services\Contracts\UserServiceInterface;
 
 class LoginController extends MobileController

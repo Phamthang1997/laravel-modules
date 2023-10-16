@@ -25,6 +25,7 @@ class ForgotController extends AdministratorController
     {
         $this->passwordService = $passwordService;
     }
+
     /**
      * @return mixed
      */

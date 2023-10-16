@@ -29,8 +29,8 @@ class ForgotRequest extends BaseRequest
     public function messages(): array
     {
         return [
-            'email.required' => __('administrator::validation.required'),
-            'email.email' => __('administrator::validation.email'),
+            'email.required' => __('mobile::validation.required'),
+            'email.email' => __('mobile::validation.email'),
         ];
     }
 }

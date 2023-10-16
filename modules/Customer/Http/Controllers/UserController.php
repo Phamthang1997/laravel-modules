@@ -3,6 +3,7 @@
 namespace Modules\Customer\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
+use Modules\Customer\Http\Requests\Customer\CreateRequest;
 use Modules\Customer\Services\Contracts\UserServiceInterface;
 
 class UserController extends CustomerController
@@ -28,11 +29,31 @@ class UserController extends CustomerController
         return $this->userService->show(1);
     }
 
+    /**
+     * @return mixed
+     */
     public function home(): mixed
     {
-        $user = Auth::user();
+        return view('customer::page.home');
+    }
 
-        return view('customer::page.home', compact('user'));
+    /**
+     * @return mixed
+     */
+    public function create(): mixed
+    {
+        return view('customer::page.customer.create');
+    }
+
+    /**
+     * @param CreateRequest $request
+     * @return mixed
+     */
+    public function store(CreateRequest $request): mixed
+    {
+        $this->userService->create($request->name, $request->email, $request->password);
+
+        return view('customer::authentication.login');
     }
 
     /**

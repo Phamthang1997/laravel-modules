@@ -29,4 +29,15 @@ class UserService implements UserServiceInterface
     {
         return $this->userRepository->getDetail($id);
     }
+
+    /**
+     * @param string $name
+     * @param string $email
+     * @param string $password
+     * @return mixed
+     */
+    public function create(string $name, string $email, string $password): mixed
+    {
+        return $this->userRepository->create(['name' => $name, 'email' => $email, 'password' => $password]);
+    }
 }

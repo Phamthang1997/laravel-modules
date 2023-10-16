@@ -3,29 +3,29 @@
 namespace Modules\Customer\Http\Controllers\Authentication;
 
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Modules\Customer\Http\Controllers\CustomerController;
-use Modules\Customer\Http\Requests\AuthenticateRequest;
-use Illuminate\Http\Request;
+use Modules\Customer\Http\Requests\Authentication\LoginRequest;
 
 class LoginController extends CustomerController
 {
     /**
      * Handle an authentication attempt.
      */
-    public function authenticate(AuthenticateRequest $request): RedirectResponse
+    public function authenticate(LoginRequest $request): RedirectResponse
     {
         $credentials = (array) $request->validated();
 
-        if (Auth::attempt($credentials)) {
+        if (Auth::attempt($credentials, !empty($request->remember))) {
             $request->session()->regenerate();
 
             /** @phpstan-ignore-next-line */
-            return redirect()->route($request->route()->getPrefix().'.home');
+            return redirect()->route('customer.home');
         }
 
         return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
+            'warning' => __('customer::auth.failed'),
         ])->onlyInput('email');
     }
 
@@ -39,6 +39,6 @@ class LoginController extends CustomerController
         $request->session()->regenerateToken();
 
         /** @phpstan-ignore-next-line */
-        return redirect()->route($request->route()->getPrefix().'.login');
+        return redirect()->route('customer.index');
     }
 }

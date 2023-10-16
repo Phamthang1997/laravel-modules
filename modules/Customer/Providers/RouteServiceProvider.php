@@ -27,6 +27,7 @@ class RouteServiceProvider extends ServiceProvider implements WithModuleProvider
         //Configure limiters web
         $this->configureRateLimiting();
         $this->setRootDir(__DIR__);
+        $this->setIsPrefix(true);
 
         $this->routes(function () {
             $this->registerModuleRouteFromPaths(
